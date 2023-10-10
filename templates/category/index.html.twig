@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des catégories{% endblock %}
+
+{% block body %}
+
+<a href="{{ path('new_category') }}"><button>Ajouter une catégorie</button></a>
+
+    <h1>Liste des catégories</h1>
+
+    {% for category in categories %}
+        {{category}} 
+        <a href="{{ path('edit_category', {'id': category.id}) }}"><button>Edit</button></a>
+        <a href="{{ path('delete_category', {'id': category.id}) }}"><button>Supprimer</button></a> <br>
+    {% endfor %}
+    
+{% endblock %}
+

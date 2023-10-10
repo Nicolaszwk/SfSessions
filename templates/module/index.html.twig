@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des modules{% endblock %}
+
+{% block body %}
+
+<a href="{{ path('new_module') }}"><button>Ajouter d'un module</button></a>
+
+    <h1>Liste des modules</h1>
+
+    {% for module in modules %}
+        {{module}} 
+        <a href="{{ path('edit_module', {'id': module.id}) }}"><button>Edit</button></a>
+        <a href="{{ path('delete_module', {'id': module.id}) }}"><button>Supprimer</button></a> <br>
+    {% endfor %}
+    
+{% endblock %}
+

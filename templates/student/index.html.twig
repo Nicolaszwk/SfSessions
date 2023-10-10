@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des formations{% endblock %}
+
+{% block body %}
+
+    <a href="{{ path('new_student') }}"><button>Ajouter un étudiant</button></a>
+
+    <h1>Liste des étudiants</h1>
+
+    {% for student in students %}
+        <a href="{{ path('show_student', {'id': student.id}) }}">{{student}} </a>
+        <a href="{{ path('edit_student', {'id': student.id}) }}"><button>Edit</button></a>
+        <a href="{{ path('delete_student', {'id': student.id}) }}"><button>Supprimer</button></a> <br>
+    {% endfor %}
+    
+{% endblock %}
+

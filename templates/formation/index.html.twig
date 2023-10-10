@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des formations{% endblock %}
+
+{% block body %}
+
+{% if is_granted('ROLE_ADMIN') %}
+
+<a href="{{ path('new_formation') }}"><button>Ajouter une formation</button></a>
+
+{% endif %}
+
+    <h1>Liste des formations</h1>
+
+    <div id="cards">
+        {% for formation in formations %}
+        <div class="formations"><a href="{{ path('show_formation', {'id': formation.id}) }}">{{formation}}</a></div>
+
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('edit_formation', {'id': formation.id}) }}"><button>Edit</button></a>
+                <a href="{{ path('delete_formation', {'id': formation.id}) }}"><button>Supprimer</button></a> <br>
+            {% endif %}
+        {% endfor %}
+    </div>
+    
+{% endblock %}

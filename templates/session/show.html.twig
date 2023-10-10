@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Details de la session{% endblock %}
+
+{% block body %}
+    <h1>Details de la session {{ session.sessionName }}</h1>
+
+    <h2>Etudiants enregistrés</h2>
+    {% for student in session.students %}
+        {{ student.firstname }}
+
+        {% if is_granted('ROLE_ADMIN') %}
+
+        <a href="{{ path('remove_student', {'id': session.id, 'student_id': student.id }) }}"><button>Retirer de la session</button></a>
+
+        {% endif %}
+        <br>
+    {% endfor %}
+
+    <br>
+
+
+    <h2>Etudiants non enregistrés</h2>
+    {% for student in studentsNotInSession %}
+            {{ student.firstname }}
+
+            {% if is_granted('ROLE_ADMIN') %}
+
+            {# <a href="{{ path('add_student', {'id': session.id}, {'student_id': student.id }) }}"><button>Ajouter à la session</button></a> #}
+            <a href="{{ path('add_student', {'id': session.id, 'student_id': student.id }) }}"><button>Ajouter à la session</button></a>
+
+            {% endif %}
+
+            <br>
+        {% endfor %}
+
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Modules
+                    </th>
+                    <th>
+                        Nb de jours
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {# on initialise une variable curentCategory à null car il n'y a pas encore de catégorie affichée #}
+    
+                {% set currentCategory = null %}
+    
+     
+    
+                {% for program in programs %}
+    
+                {# si la catégorie est differente de la catégorie actuelle, alors je l'affiche #}
+    
+                {% if program.module.category != currentCategory %}
+    
+                <tr>
+    
+                    <td colspan="2" class="table-category">{{ program.module.category }}</td>
+    
+                </tr>
+    
+                <tr>
+    
+                    <td>{{ program.module }}</td>
+    
+                    <td>{{ program.nbDays }}</td>
+    
+                </tr>
+    
+                {# puis on passe la catégorie en valeur de currentCategory #}
+    
+                {% set currentCategory = program.module.category %}
+    
+                {# sinon, on continue d'afficher les modules #}
+    
+                {% else %}
+    
+                <tr>
+    
+                    <td>{{ program.module }}</td>
+    
+                    <td>{{ program.nbDays }}</td>
+    
+                </tr>
+    
+                {% endif %}
+    
+                {% endfor %}
+    
+            </tbody>
+
+
+
+            {# <tbody>
+                {% for program in session.programs %}
+
+                <tr>
+                    <td>{{ program.module.category.categoryName }}</td>
+                </tr>
+                <tr>
+                    <td> {{ program.module.moduleName }} </td>
+                    <td> {{ program.nbDays }} </td>
+                    <td></td>
+                </tr>
+              
+            {% endfor %}
+         
+            </tbody> #}
+   
+{% endblock %}
+
+
